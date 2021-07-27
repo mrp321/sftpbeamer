@@ -14,12 +14,12 @@ public class App extends AbstractVerticle {
         deploymentOptions.setInstances(Integer.valueOf(Config.valueOf(ConfigName.HTTP_VERTICLE_INSTANCE_NUMBER)));
         deploymentOptions.setWorkerPoolSize(Integer.valueOf(Config.valueOf(ConfigName.WORKER_THREAD_POOL_SIZE)));
         vertx.deployVerticle(HttpVerticle.class.getName(), deploymentOptions);
-
-        no.neic.ssh.Config.init();
-        DeploymentOptions deploymentOptions4SSH = new DeploymentOptions();
-        deploymentOptions4SSH.setInstances(Integer.parseInt(Config.valueOf(no.neic.ssh.constants.ConfigName.HTTP_VERTICLE_INSTANCE_NUMBER)));
-        deploymentOptions4SSH.setWorkerPoolSize(Integer.parseInt(Config.valueOf(no.neic.ssh.constants.ConfigName.WORKER_THREAD_POOL_SIZE)));
-        vertx.deployVerticle(no.neic.ssh.HttpVerticle.class.getName(), deploymentOptions4SSH);
+//
+//        no.neic.ssh.Config.init();
+//        DeploymentOptions deploymentOptions4SSH = new DeploymentOptions();
+//        deploymentOptions4SSH.setInstances(Integer.parseInt(Config.valueOf(no.neic.ssh.constants.ConfigName.HTTP_VERTICLE_INSTANCE_NUMBER)));
+//        deploymentOptions4SSH.setWorkerPoolSize(Integer.parseInt(Config.valueOf(no.neic.ssh.constants.ConfigName.WORKER_THREAD_POOL_SIZE)));
+//        vertx.deployVerticle(no.neic.ssh.HttpVerticle.class.getName(), deploymentOptions4SSH);
     }
 
 }

@@ -1,0 +1,19 @@
+#outerDiv {
+    width: 700px;
+    height: 400px;
+}
+
+#terminal {
+    width: 100%;
+    height: 100%
+}
+
+#dragDiv {
+    position: absolute;
+    top: 400px;
+    left: 708px;
+    width: 10px;
+    height: 10px;
+    border: #4e4e4e solid 1px;
+    cursor: all-scroll;
+}
