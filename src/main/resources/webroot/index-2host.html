@@ -16,9 +16,6 @@
     <link rel="stylesheet" href="static/css/jquery.fileupload.css">
     <link rel="stylesheet" href="static/css/bootstrap-combobox.css">
 
-    <!--webssh css-->
-    <link rel="stylesheet" href="static/xterm/css/xterm.css">
-    <link rel="stylesheet" href="static/css/terminal.css">
 
     <script type="text/javascript" src="static/js/jquery.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
@@ -36,16 +33,54 @@
 
     <script type="text/javascript" src="static/js/cookieconsent.min.js"></script>
 
-    <!--webssh js-->
-    <script type="text/javascript" src="static/xterm/lib/xterm.js"></script>
-    <script type="text/javascript" src="static/js/login-ssh.js"></script>
-    <script type="text/javascript" src="static/js/terminal.js"></script>
-    <script type="text/javascript" src="static/js/webssh.js"></script>
 
 </head>
 <body>
+<div class="modal fade" role="dialog" id="transfer_modal" tabindex="-1" aria-labelledby="transfer_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title">File transfer</h3>
+            </div>
 
-<!--上传文件-->
+            <div class="modal-body" style="padding-bottom: 45px;">
+                <div class="form-group" id="notification-email-form">
+                    <form>
+                        <label for="notification-email">Email for notification</label>
+                        <input type="email" class="form-control form-input" id="notification-email" placeholder="Email"
+                               size="25" autofocus/>
+                        <p class="help-block">An email notification will be sent to you once file transfer is done.</p>
+                        <button type="submit" id="confirm-email-btn" class="btn btn-primary pull-right">Next</button>
+                    </form>
+                </div>
+                <div class="form-group hidden" id="credential-for-origin-form">
+                    <form>
+                        <p>Credential for <b id="credential-for-origin"></b></p>
+                        <input type="password" class="form-control form-input" id="credential-for-origin-password"
+                               placeholder="Password" autofocus size="25"/>
+                        <input type="text" class="form-control form-input" id="credential-for-origin-otc"
+                               placeholder="One-time Code" maxlength="15" size="15"/>
+                        <button type="submit" id="confirm-origin-btn" class="btn btn-primary pull-right">Next</button>
+                    </form>
+                </div>
+                <div class="form-group hidden" id="credential-for-dest-form">
+                    <form>
+                        <p>Credential for <b id="credential-for-dest"></b></p>
+                        <input type="password" class="form-control form-input" id="credential-for-dest-password"
+                               placeholder="Password" size="25"/>
+                        <input type="text" class="form-control form-input" id="credential-for-dest-otc"
+                               placeholder="One-time Code" maxlength="15" size="15"/>
+                        <button type="submit" id="confirm-transfer-btn" class="btn btn-primary pull-right">Ok</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" role="dialog" id="upload_modal" tabindex="-1" aria-labelledby="upload_modal_label">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -74,7 +109,6 @@
     </div>
 </div>
 
-<!--密码输入-->
 <div class="modal fade" role="dialog" id="credential_modal" tabindex="-1" aria-labelledby="credential_modal_label">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -95,8 +129,7 @@
     </div>
 </div>
 
-<div class="modal fade" role="dialog" id="input_credential_modal" tabindex="-1"
-     aria-labelledby="input_credential_modal_label">
+<div class="modal fade" role="dialog" id="input_credential_modal" tabindex="-1" aria-labelledby="input_credential_modal_label">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -123,18 +156,14 @@
                 <h4></h4>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="confirm_modal_button">
-                    Confirm
-                </button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="confirm_modal_button">Confirm</button>
                 <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
-<!--创建文件夹-->
-<div class="modal fade" role="dialog" id="create_folder_modal" tabindex="-1"
-     aria-labelledby="create_folder_modal_label">
+<div class="modal fade" role="dialog" id="create_folder_modal" tabindex="-1" aria-labelledby="create_folder_modal_label">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -151,16 +180,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="folder_create">Create
-                    </button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="folder_create">Create</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-
-<!--重命名-->
 <div class="modal fade" role="dialog" id="rename_modal" tabindex="-1" aria-labelledby="rename_modal_label">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -178,19 +204,16 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="confirm_rename">Confirm
-                    </button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="confirm_rename">Confirm</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-
-<!--SFTP登录, SFTP文件展示/操作界面-->
 <div class="panel panel-default container-fluid">
     <div class="panel-body row">
-        <h1 class="site-title">SFTP-SSH Beamer</h1>
+        <h1 class="site-title">SFTP Beamer</h1>
     </div>
     <div class="panel-body row">
         <div class="panel panel-info col-md-6 host1" id="host1-panel">
@@ -201,8 +224,7 @@
                 <form class="form-inline login-form host1-form">
                     <div class="form-group">
                         <label class="sr-only" for="host1-username">User Name</label>
-                        <input type="text" class="form-control form-input" id="host1-username" placeholder="User Name"
-                               autofocus size="25">
+                        <input type="text" class="form-control form-input" id="host1-username" placeholder="User Name" autofocus size="25">
                     </div>
                     <div class="form-group">
                         <select class="combobox form-control" id="host1-select">
@@ -214,18 +236,13 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="host1-port">Port</label>
-                        <input type="text" class="form-control form-input" id="host1-port" placeholder="Port" value="22"
-                               maxlength="6" size="4">
+                        <input type="text" class="form-control form-input" id="host1-port" placeholder="Port" value="22" maxlength="6" size="4">
                     </div>
 
                     <button type="button" id="host1-submit-btn" class="btn btn-primary btn-connect"
-                            data-target="host1"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; Connect SFTP
+                            data-target="host1"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; Connect
                     </button>
-                    <button type="button" id="host1-submit-btn-ssh" class="btn btn-primary btn-connect"
-                            data-target="host1"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; Connect SSH
-                    </button>
-                    <button type="button" id="host1-disconnect-btn" class="btn btn-primary btn-disconnect"><i
-                            class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Disconnect
+                    <button type="button" id="host1-disconnect-btn" class="btn btn-primary btn-disconnect"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Disconnect
                     </button>
 
                 </form>
@@ -235,13 +252,37 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="panle-body row">
-        <!--webssh div-->
-        <div id="outerDiv">
-            <div id="terminal"></div>
+        <div class="panel panel-info col-md-6 host2" id="host2-panel">
+            <div class="panel-heading">
+                <h4 class="panel-title text-center">Host 2</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline login-form host2-form">
+                    <div class="form-group">
+                        <label class="sr-only" for="host2-username">User Name</label>
+                        <input type="text" class="form-control form-input" id="host2-username" placeholder="User Name" size="25">
+                    </div>
+                    <div class="form-group">
+                        <select class="combobox form-control" id="host2-select">
+                            <option value selected="selected">Hostname</option>
+                            <option value="Tsd">tsd-fx01.tsd.usit.no</option>
+                            <option value="Mosler">mosler.bils.se</option>
+                            <option value="Computerome">computerome.cbs.dtu.dk</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="host2-port">Port</label>
+                        <input type="text" class="form-control form-input" id="host2-port" placeholder="Port" value="22" maxlength="6" size="4">
+                    </div>
+                    <button type="button" id="host2-submit-btn" class="btn btn-primary btn-connect" data-target="host2"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; Connect</button>
+                    <button type="button" id="host2-disconnect-btn" class="btn btn-primary btn-disconnect"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Disconnect</button>
+                </form>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="host2-path"></div>
+                    <div id="host2-table-div"></div>
+                </div>
+            </div>
         </div>
-        <div id="dragDiv"></div>
     </div>
 </div>
 <div id="waiting-box">
@@ -249,21 +290,30 @@
     <p></p>
 </div>
 <div id="gray-screen"></div>
-
-<!--SFTP界面鼠标右键操作命令-->
 <div class="host1-menu menu">
     <ul>
-        <li><a href="#" id="host1-delete-btn" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;
-            Delete Selections</a></li>
+        <li><a href="#" id="host1-delete-btn" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp; Delete Selections</a></li>
         <hr/>
-        <li><a href="#" id="host1-create-btn" type="button"><i class="fa fa-folder-o" aria-hidden="true"></i>&nbsp; New
-            Folder</a></li>
+        <li><a href="#" id="host1-create-btn" type="button"><i class="fa fa-folder-o" aria-hidden="true"></i>&nbsp; New Folder</a></li>
         <hr/>
-        <li><a href="#" id="host1-rename-btn" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>&nbsp;
-            Rename</a></li>
+        <li><a href="#" id="host1-rename-btn" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>&nbsp; Rename</a></li>
         <hr/>
-        <li><a href="#" id="host1-upload-btn" type="button"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload
-            Files</a></li>
+        <li><a href="#" id="host1-transfer-btn" type="button"><i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp; Transfer Selections</a></li>
+        <hr/>
+        <li><a href="#" id="host1-upload-btn" type="button"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload Files</a></li>
+    </ul>
+</div>
+<div class="host2-menu menu">
+    <ul>
+        <li><a href="#" id="host2-delete-btn" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp; Delete Selections</a></li>
+        <hr/>
+        <li><a href="#" id="host2-create-btn" type="button"><i class="fa fa-folder-o" aria-hidden="true"></i>&nbsp; New Folder</a></li>
+        <hr/>
+        <li><a href="#" id="host2-rename-btn" type="button"><i class="fa fa-files-o" aria-hidden="true"></i>&nbsp; Rename</a></li>
+        <hr/>
+        <li><a href="#" id="host2-transfer-btn" type="button"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Transfer Selections</a></li>
+        <hr/>
+        <li><a href="#" id="host2-upload-btn" type="button"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload Files</a></li>
     </ul>
 </div>
 </body>

@@ -68,6 +68,7 @@ public final class HttpVerticle extends AbstractVerticle {
         router.get(UrlPath.SFTP_DOWNLOAD_CHECK).handler(HttpRequestHandler::downloadCheckHandler);
 
         router.route().handler(StaticHandler.create());
+        router.route().handler(StaticHandler.create().setIndexPage("/index-2host.html"));
         router.route("/static/*").handler(StaticHandler.create());
 
         httpServer.requestHandler(router::accept).listen(

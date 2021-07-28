@@ -1,6 +1,6 @@
 {
   "server": {
-    "name": "domain name",
+    "name": "localhost",
     "ws_port": 8888,
     "ssl": false
   },
